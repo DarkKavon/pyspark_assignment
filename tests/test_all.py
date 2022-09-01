@@ -1,5 +1,5 @@
 import logging
-from src import main
+from src.codac_tool import main
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType
 from pyspark.sql import SparkSession
 from chispa.dataframe_comparer import assert_df_equality
