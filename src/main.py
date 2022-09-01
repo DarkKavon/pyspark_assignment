@@ -29,7 +29,7 @@ def rename_columns(df, column_names_mapping):
     return df
 
 
-def filter_columns(df, column_name, values):
+def filter_column(df, column_name, values):
     if type(values) != list:
         values = list(values)
     return df.filter(col(column_name).isin(values))
@@ -45,8 +45,8 @@ if __name__ == "__main__":
         exit(1)
     filepath1, filepath2, countries = argv[1:4]
     countries = [e.strip() for e in countries[1:-1].split(',')]
-    log.info("Filepaths:", filepath1, filepath2)
-    log.info("Countries:", countries)
+    log.info("Filepaths: " + filepath1 + " " + filepath2)
+    log.info("Countries: " + str(countries))
 
     spark = SparkSession.builder.appName("codac").getOrCreate()
     sc = spark.sparkContext
@@ -65,7 +65,7 @@ if __name__ == "__main__":
                         'btc_a': 'bitcoin_address', 'cc_t': 'credit_card_type'})
     log.info("Columns renamed.")
 
-    df = filter_columns(df, "country", countries)
+    df = filter_column(df, "country", countries)
     log.info("Columns filtered.")
 
     script_path = os.path.dirname(os.path.realpath(__file__))
