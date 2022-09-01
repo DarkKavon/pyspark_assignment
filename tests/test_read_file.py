@@ -17,10 +17,20 @@ def spark():
 @pytest.fixture()
 def schema():
     return StructType([
-        StructField("id", IntegerType(), nullable=False),
-        StructField("first_name", StringType(), nullable=False),
-        StructField("last_name", StringType(), nullable=False),
-        StructField("email", StringType(), nullable=False)
+        StructField("id", IntegerType(), nullable=True),
+        StructField("first_name", StringType(), nullable=True),
+        StructField("last_name", StringType(), nullable=True),
+        StructField("email", StringType(), nullable=True)
+    ])
+
+
+@pytest.fixture()
+def schema2():
+    return StructType([
+        StructField("id", IntegerType(), nullable=True),
+        StructField("fname", StringType(), nullable=True),
+        StructField("lname", StringType(), nullable=True),
+        StructField("email", StringType(), nullable=True)
     ])
 
 
@@ -55,3 +65,14 @@ def test_filter_column(spark, df, schema):
     filter_value = ["Goady", "Durrett"]
     filtered_df = main.filter_column(df, "last_name", filter_value)
     assert_df_equality(excepted_df, filtered_df)
+
+
+def test_rename_columns(spark, df, data, schema2):
+    excepted_df = spark.createDataFrame(data=data, schema=schema2)
+    renamed_df = main.rename_columns(df, {"first_name": "fname", "last_name": "lname"})
+    assert_df_equality(excepted_df, renamed_df)
+
+
+def test_read_file(spark, df):
+    read_df = main.read_file(spark, os.getcwd()+"/tests/test_dataset.csv")
+    assert_df_equality(df, read_df)

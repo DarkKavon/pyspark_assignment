@@ -1,3 +1,4 @@
 *.log
 .pytest*
-client_data/
+client_data/*
+__pycache__

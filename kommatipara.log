@@ -26,3 +26,16 @@
 2022-09-01 10:59:10,942 INFO     Columns filtered.
 2022-09-01 10:59:12,148 INFO     File written.
 2022-09-01 10:59:12,148 INFO     Run end.
+2022-09-01 12:06:59,727 INFO     Starting new run.
+2022-09-01 12:06:59,727 INFO     Filepaths: /mnt/c/Users/kwandel/Desktop/data/dataset_one.csv /mnt/c/Users/kwandel/Desktop/data/dataset_two.csv
+2022-09-01 12:06:59,727 INFO     Countries: ['United Kingdom', 'Netherlands']
+2022-09-01 12:09:13,614 INFO     Starting new run.
+2022-09-01 12:09:13,614 INFO     Filepaths: /mnt/c/Users/kwandel/Desktop/data/dataset_one.csv /mnt/c/Users/kwandel/Desktop/data/dataset_two.csv
+2022-09-01 12:09:13,614 INFO     Countries: ['United Kingdom', 'Netherlands']
+2022-09-01 12:09:23,735 INFO     Files read.
+2022-09-01 12:09:23,750 INFO     Columns dropped.
+2022-09-01 12:09:23,775 INFO     Dataframes joined.
+2022-09-01 12:09:23,816 INFO     Columns renamed.
+2022-09-01 12:09:23,856 INFO     Columns filtered.
+2022-09-01 12:09:25,240 INFO     File written.
+2022-09-01 12:09:25,241 INFO     Run end.

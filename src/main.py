@@ -19,7 +19,7 @@ def create_rotating_log(path, size=4096):
     return logger
 
 
-def read_file(filepath):
+def read_file(spark, filepath):
     return spark.read.option("header", True).option("inferSchema", True).csv(filepath)
 
 
@@ -50,8 +50,8 @@ if __name__ == "__main__":
 
     spark = SparkSession.builder.appName("codac").getOrCreate()
     sc = spark.sparkContext
-    client_df = read_file(filepath1)
-    finance_df = read_file(filepath2)
+    client_df = read_file(spark, filepath1)
+    finance_df = read_file(spark, filepath2)
     log.info("Files read.")
 
     client_df = client_df.drop("first_name", "last_name")
