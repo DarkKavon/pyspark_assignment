@@ -10,6 +10,7 @@ on:
 
 jobs:
   test:
+    name: tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -22,6 +23,7 @@ jobs:
         run: pytest 
 
   build:
+    name: build
     runs-on: ubuntu-latest
     needs: test
     steps:
