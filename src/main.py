@@ -31,7 +31,9 @@ def rename_columns(df, column_names_mapping):
 
 def filter_column(df, column_name, values):
     if type(values) != list:
-        values = list(values)
+        value = values
+        values = []
+        values.append(value)
     return df.filter(col(column_name).isin(values))
 
 

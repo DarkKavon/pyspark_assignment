@@ -1,6 +1,7 @@
+import logging
 from src import main
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType
-from pyspark.sql import SparkSession, utils, dataframe
+from pyspark.sql import SparkSession
 from chispa.dataframe_comparer import assert_df_equality
 import pytest
 import os
@@ -55,7 +56,7 @@ def df(spark, data, schema):
     return spark.createDataFrame(data=data, schema=schema)
 
 
-def test_filter_column(spark, df, schema):
+def test_filter_column_list(spark, df, schema):
     expected_result = [
         (1, "Neel", "Goady", "ngoady0@netvibes.com"),
         (4, "Peterus", "Goady", "pgoady3@apache.org"),
@@ -63,6 +64,17 @@ def test_filter_column(spark, df, schema):
     ]
     excepted_df = spark.createDataFrame(data=expected_result, schema=schema)
     filter_value = ["Goady", "Durrett"]
+    filtered_df = main.filter_column(df, "last_name", filter_value)
+    assert_df_equality(excepted_df, filtered_df)
+
+
+def test_filter_column_no_list(spark, df, schema):
+    expected_result = [
+        (1, "Neel", "Goady", "ngoady0@netvibes.com"),
+        (4, "Peterus", "Goady", "pgoady3@apache.org")
+    ]
+    excepted_df = spark.createDataFrame(data=expected_result, schema=schema)
+    filter_value = "Goady"
     filtered_df = main.filter_column(df, "last_name", filter_value)
     assert_df_equality(excepted_df, filtered_df)
 
@@ -84,3 +96,9 @@ def test_rename_columns_skip(spark, df, data, schema2):
 def test_read_file(spark, df):
     read_df = main.read_file(spark, os.getcwd()+"/tests/test_dataset.csv")
     assert_df_equality(df, read_df)
+
+
+def test_create_rotating_log():
+    logger = main.create_rotating_log("testlogger.log")
+    os.remove("testlogger.log")
+    assert logging.Logger == type(logger)

@@ -2,3 +2,4 @@
 .pytest*
 client_data/*
 __pycache__
+.cov*
