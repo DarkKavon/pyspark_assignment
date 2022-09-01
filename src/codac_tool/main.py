@@ -73,35 +73,46 @@ if __name__ == "__main__":
             'Too few or too many arguments!\nReminder: python src/main.py "filepath1" "filepath2" "[list,of,expected,countries]"')
         log.info("Too few or too many arguments.")
         exit(1)
+    
+    # resolve arguments
     filepath1, filepath2, countries = argv[1:4]
     countries = [e.strip() for e in countries[1:-1].split(',')]
     log.info("Filepaths: " + filepath1 + " " + filepath2)
     log.info("Countries: " + str(countries))
 
+    # create Spark session
     spark = SparkSession.builder.appName("codac").getOrCreate()
     sc = spark.sparkContext
+
+    # read files 
     client_df = read_file(spark, filepath1)
     finance_df = read_file(spark, filepath2)
     log.info("Files read.")
 
+    # drop specified columns 
     client_df = client_df.drop("first_name", "last_name")
     finance_df = finance_df.drop("cc_n")
     log.info("Columns dropped.")
 
+    # join datasets by id
     df = client_df.join(finance_df, "id")
     log.info("Dataframes joined.")
 
+    # rename columns 
     df = rename_columns(df, {'id': 'client_identifier',
                         'btc_a': 'bitcoin_address', 'cc_t': 'credit_card_type'})
     log.info("Columns renamed.")
 
+    # filter columns to preserve countries form arguments
     df = filter_column(df, "country", countries)
     log.info("Columns filtered.")
 
+    # specify target path
     script_path = os.path.dirname(os.path.realpath(__file__))
     target_path = os.path.join(script_path, '..', 'client_data', dt.datetime.strftime(
         dt.datetime.now(), "%Y%m%d%H%M%S"))
 
+    # save file on disk
     df.coalesce(1).write.csv(target_path)
     log.info("File written.")
     log.info("Run end.")
