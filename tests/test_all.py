@@ -94,7 +94,7 @@ def test_rename_columns_skip(spark, df, data, schema2):
 
 
 def test_read_file(spark, df):
-    read_df = main.read_file(spark, os.getcwd()+"/tests/test_dataset.csv")
+    read_df = main.read_file(spark, os.getcwd()+"/tests/dataset_test.csv")
     assert_df_equality(df, read_df)
 
 
