@@ -9,7 +9,7 @@ on:
       - "master"
 
 jobs:
-  test:
+  tests:
     name: tests
     runs-on: ubuntu-latest
     steps:
@@ -28,7 +28,7 @@ jobs:
     needs: test
     steps:
       - name: Install requirements
-              run: pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Build wheel
         run: poetry build
