@@ -1,11 +1,11 @@
+from src import main
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+from pyspark.sql import SparkSession, utils, dataframe
+from chispa.dataframe_comparer import assert_df_equality
+import pytest
 import os
 import sys
 sys.path.append(os.getcwd())
-import pytest
-from chispa.dataframe_comparer import assert_df_equality
-from pyspark.sql import SparkSession, utils, dataframe
-from pyspark.sql.types import StructType, StructField, StringType, IntegerType
-from src import main
 
 
 @pytest.fixture
@@ -69,7 +69,15 @@ def test_filter_column(spark, df, schema):
 
 def test_rename_columns(spark, df, data, schema2):
     excepted_df = spark.createDataFrame(data=data, schema=schema2)
-    renamed_df = main.rename_columns(df, {"first_name": "fname", "last_name": "lname"})
+    renamed_df = main.rename_columns(
+        df, {"first_name": "fname", "last_name": "lname"})
+    assert_df_equality(excepted_df, renamed_df)
+
+
+def test_rename_columns_skip(spark, df, data, schema2):
+    excepted_df = spark.createDataFrame(data=data, schema=schema2)
+    renamed_df = main.rename_columns(
+        df, {"first_name": "fname", "last_name": "lname", "too_skip": "skip"})
     assert_df_equality(excepted_df, renamed_df)
 
 
