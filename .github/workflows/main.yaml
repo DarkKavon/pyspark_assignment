@@ -9,9 +9,8 @@ on:
       - "master"
 
 jobs:
+  runs-on: ubuntu-latest
   test:
-    runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -23,8 +22,7 @@ jobs:
         run: pytest 
 
   build:
-    runs-on: ubuntu-latest
-    
+    needs: test
     steps:
       - name: Install requirements
               run: pip install -r requirements.txt
