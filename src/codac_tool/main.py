@@ -109,7 +109,7 @@ if __name__ == "__main__":
 
     # specify target path
     script_path = os.path.dirname(os.path.realpath(__file__))
-    target_path = os.path.join(script_path, '..', 'client_data', dt.datetime.strftime(
+    target_path = os.path.join(script_path, '..', '..', 'client_data', dt.datetime.strftime(
         dt.datetime.now(), "%Y%m%d%H%M%S"))
 
     # save file on disk
