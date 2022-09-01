@@ -1,0 +1,21 @@
+name: Run tests & build
+
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    branches:
+      - "master"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: pytest tests/test*
