@@ -1,0 +1,8 @@
+2022-09-01 09:45:31,860 INFO     Starting new run.
+2022-09-01 09:45:39,225 INFO     Files read.
+2022-09-01 09:45:39,241 INFO     Columns dropped.
+2022-09-01 09:45:39,259 INFO     Dataframes joined.
+2022-09-01 09:45:39,274 INFO     Columns renamed.
+2022-09-01 09:45:39,290 INFO     Columns filtered.
+2022-09-01 09:45:40,484 INFO     File written.
+2022-09-01 09:45:40,484 INFO     Run end.

@@ -6,18 +6,17 @@ from sys import argv
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 
+log_filepath = "kommatipara.log"
 
-logging.basicConfig(
-        format='%(asctime)s %(levelname)-8s %(message)s',
-        level=logging.INFO,
-        datefmt='%Y-%m-%d %H:%M:%S')
 
 def create_rotating_log(path, size=4096):
     logger = logging.getLogger("rotating_logger")
     logger.setLevel(logging.INFO)
     handler = RotatingFileHandler(path, maxBytes=size, backupCount=5)
+    foramtter = logging.Formatter("%(asctime)s %(levelname)-8s %(message)s")
+    handler.setFormatter(foramtter)
     logger.addHandler(handler)
-    return logging.Logger
+    return logger
 
 
 def read_file(filepath):
@@ -34,9 +33,6 @@ def filter_columns(df, column_name, values):
     if type(values) != list:
         values = list(values)
     return df.filter(col(column_name).isin(values))
-
-
-log_filepath = "kommatipara.log"
 
 
 if __name__ == "__main__":
