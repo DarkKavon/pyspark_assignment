@@ -40,6 +40,7 @@ jobs:
         run: |
           git config --global user.email "kacperwandel@gmail.com"
           git config --global user.name "darkkavon"
+          
       - name: Commit and push wheel
         run: |
           git add -f ./dist/*.whl
