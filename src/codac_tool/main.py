@@ -19,8 +19,8 @@ def create_rotating_log(path, size=4096):
     logger = logging.getLogger("rotating_logger")
     logger.setLevel(logging.INFO)
     handler = RotatingFileHandler(path, maxBytes=size, backupCount=5)
-    foramtter = logging.Formatter("%(asctime)s %(levelname)-8s %(message)s")
-    handler.setFormatter(foramtter)
+    formatter = logging.Formatter("%(asctime)s %(levelname)-8s %(message)s")
+    handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
 
@@ -70,13 +70,13 @@ if __name__ == "__main__":
     log.info("Starting new run.")
     if len(argv) != 4:
         print(
-            'Too few or too many arguments!\nReminder: python src/main.py "filepath1" "filepath2" "[list,of,expected,countries]"')
+            'Too few or too many arguments!\nReminder: python src/codac_tool/main.py "filepath1" "filepath2" "[list,of,expected,countries]"')
         log.info("Too few or too many arguments.")
         exit(1)
 
     # resolve arguments
     filepath1, filepath2, countries = argv[1:4]
-    countries = [e.strip() for e in countries[1:-1].split(',')]
+    countries = [e.strip().replace("'","").replace('"',"").replace('[',"").replace(']',"") for e in countries.split(',')]
     log.info("Filepaths: " + filepath1 + " " + filepath2)
     log.info("Countries: " + str(countries))
 
