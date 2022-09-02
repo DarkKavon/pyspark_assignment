@@ -3,5 +3,4 @@
 client_data/*
 __pycache__
 .cov*
-dist/
 *venv
