@@ -77,7 +77,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "countries", help="List of countries to preserve, eg. [country1, country2]")
     parser.add_argument(
-        "--verbose", help="Logs will be printed in terminal", action="store_true")
+        "--verbose", "-v", help="Logs will be printed in terminal", action="store_true")
     args = parser.parse_args()
 
     # resolve if verbose
