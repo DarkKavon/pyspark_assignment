@@ -1,5 +1,6 @@
 import os
 import logging
+import argparse
 from logging.handlers import RotatingFileHandler
 import datetime as dt
 from sys import argv
@@ -68,16 +69,29 @@ def filter_column(df, column_name, values):
 if __name__ == "__main__":
     log = create_rotating_log(log_filepath)
     log.info("Starting new run.")
-    if len(argv) != 4:
-        print(
-            'Too few or too many arguments!\nReminder: python src/codac_tool/main.py "filepath1" "filepath2" "[list,of,expected,countries]"')
-        log.info("Too few or too many arguments.")
-        exit(1)
 
-    # resolve arguments
-    filepath1, filepath2, countries = argv[1:4]
-    countries = [e.strip().replace("'","").replace('"',"").replace('[',"").replace(']',"") for e in countries.split(',')]
-    log.info("Filepaths: " + filepath1 + " " + filepath2)
+    # create arguments parser
+    parser = argparse.ArgumentParser()
+    parser.add_argument("filepath1", help="Filepath to the clients' dataset")
+    parser.add_argument("filepath2", help="Filepath to th financial dataset")
+    parser.add_argument(
+        "countries", help="List of countries to preserve, eg. [country1, country2]")
+    parser.add_argument(
+        "--verbose", help="Logs will be printed in terminal", action="store_true")
+    args = parser.parse_args()
+
+    # resolve if verbose
+    if args.verbose:
+        formatter = logging.Formatter(
+            "%(asctime)s %(levelname)-8s %(message)s")
+        consoleHandler = logging.StreamHandler()
+        consoleHandler.setFormatter(formatter)
+        log.addHandler(consoleHandler)
+
+    # parse countries
+    countries = [e.strip().replace("'", "").replace('"', "").replace(
+        '[', "").replace(']', "") for e in args.countries.split(',')]
+    log.info("Filepaths: " + args.filepath1 + " " + args.filepath2)
     log.info("Countries: " + str(countries))
 
     # create Spark session
@@ -85,8 +99,8 @@ if __name__ == "__main__":
     sc = spark.sparkContext
 
     # read files
-    client_df = read_file(spark, filepath1)
-    finance_df = read_file(spark, filepath2)
+    client_df = read_file(spark, args.filepath1)
+    finance_df = read_file(spark, args.filepath2)
     log.info("Files read.")
 
     # drop specified columns
