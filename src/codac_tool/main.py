@@ -73,7 +73,7 @@ if __name__ == "__main__":
             'Too few or too many arguments!\nReminder: python src/main.py "filepath1" "filepath2" "[list,of,expected,countries]"')
         log.info("Too few or too many arguments.")
         exit(1)
-    
+
     # resolve arguments
     filepath1, filepath2, countries = argv[1:4]
     countries = [e.strip() for e in countries[1:-1].split(',')]
@@ -84,12 +84,12 @@ if __name__ == "__main__":
     spark = SparkSession.builder.appName("codac").getOrCreate()
     sc = spark.sparkContext
 
-    # read files 
+    # read files
     client_df = read_file(spark, filepath1)
     finance_df = read_file(spark, filepath2)
     log.info("Files read.")
 
-    # drop specified columns 
+    # drop specified columns
     client_df = client_df.drop("first_name", "last_name")
     finance_df = finance_df.drop("cc_n")
     log.info("Columns dropped.")
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     df = client_df.join(finance_df, "id")
     log.info("Dataframes joined.")
 
-    # rename columns 
+    # rename columns
     df = rename_columns(df, {'id': 'client_identifier',
                         'btc_a': 'bitcoin_address', 'cc_t': 'credit_card_type'})
     log.info("Columns renamed.")
