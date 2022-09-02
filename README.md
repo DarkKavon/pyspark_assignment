@@ -3,6 +3,7 @@
 ## Table of contents
 * [Description](#desc)
 * [How to use](#htu)
+* [Files requirements](#filesreq)
 * [Technology](#tech)
 * [Author](#auth)
 
@@ -22,8 +23,29 @@ Example:
 python main.py "file/path/to/client/dataset" "file/path/to/financial/dataset" "[list,of,expected,Scountries]"
 ```
 
+<a href="#filesreq"></a>
+## Files requirements
+
+### Clients' dataset
+* Comma-separated file
+* Expected schema given below:
+|Column name|Type|
+|id|Integer|
+|first_name|String|
+|last_name|String|
+|email|String|
+
+### Financial dataset
+* Comma-separated file
+* Expected schema given below:
+|Column name|Type|
+|id|Integer|
+|btc_a|String|
+|cc_t|String|
+|cc_n|Long|
+
 <a href="#tech"></a>
-## Tech
+## Technology
 * Python == 3.9
 * Spark == 3.3.0
 
