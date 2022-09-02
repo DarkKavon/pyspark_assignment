@@ -14,7 +14,7 @@ def create_rotating_log(path, size=4096):
     Creates a logger for rotating logs.
     :param str path: path to rotating log file
     :return: rotating logger
-    :rtype logging.Logger:
+    :rtype: logging.Logger
     """
     logger = logging.getLogger("rotating_logger")
     logger.setLevel(logging.INFO)
@@ -31,7 +31,7 @@ def read_file(spark, filepath):
     :param SparkSession spark: existing Spark session
     :param str filepath: path to dataset
     :return: Spark dataframe
-    :rtype DataFrame:
+    :rtype: DataFrame
     """
     return spark.read.option("header", True).option("inferSchema", True).csv(filepath)
 
@@ -42,7 +42,7 @@ def rename_columns(df, column_names_mapping):
     :param DataFrame df: existing dataframe for renaming columns
     :param dict column_names_mapping: dictionary containing column names mapping {"old": "new"}
     :return: dataframe with renamed columns
-    :rtype DataFrame:
+    :rtype: DataFrame
     """
     for k, v in column_names_mapping.items():
         df = df.withColumnRenamed(k, v)
@@ -56,7 +56,7 @@ def filter_column(df, column_name, values):
     :param str column_name: column for filter to be applied
     :param str|list values: values to preserve
     :return: filtered dataframe
-    :rtype DataFrame:
+    :rtype: DataFrame
     """
     if type(values) != list:
         value = values
