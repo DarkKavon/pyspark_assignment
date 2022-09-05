@@ -50,7 +50,7 @@ def rename_columns(df: DataFrame, column_names_mapping: dict) -> DataFrame:
     return df
 
 
-def filter_column(df: DataFrame, column_name: str, values : Union[str, list]) -> DataFrame:
+def filter_column(df: DataFrame, column_name: str, values: Union[str, list]) -> DataFrame:
     """
     Filters dataframe to preserve given values.
     :param DataFrame df: existing dataframe for filtering
