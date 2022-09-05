@@ -3,14 +3,14 @@ import logging
 import argparse
 from logging.handlers import RotatingFileHandler
 import datetime as dt
-from sys import argv
+from typing import Union
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 
 log_filepath = "kommatipara.log"
 
 
-def create_rotating_log(path, size=4096):
+def create_rotating_log(path: str, size: int = 4096) -> logging.Logger:
     """
     Creates a logger for rotating logs.
     :param str path: path to rotating log file
@@ -26,7 +26,7 @@ def create_rotating_log(path, size=4096):
     return logger
 
 
-def read_file(spark, filepath):
+def read_file(spark: SparkSession, filepath: str) -> DataFrame:
     """
     Reads comma-separated dataset into Spark dataframe.
     :param SparkSession spark: existing Spark session
@@ -37,7 +37,7 @@ def read_file(spark, filepath):
     return spark.read.option("header", True).option("inferSchema", True).csv(filepath)
 
 
-def rename_columns(df, column_names_mapping):
+def rename_columns(df: DataFrame, column_names_mapping: dict) -> DataFrame:
     """
     Renames column names using provided mapping.
     :param DataFrame df: existing dataframe for renaming columns
@@ -50,7 +50,7 @@ def rename_columns(df, column_names_mapping):
     return df
 
 
-def filter_column(df, column_name, values):
+def filter_column(df: DataFrame, column_name: str, values : Union[str, list]) -> DataFrame:
     """
     Filters dataframe to preserve given values.
     :param DataFrame df: existing dataframe for filtering
