@@ -44,5 +44,6 @@ jobs:
       - name: Commit and push wheel
         run: |
           git add -f ./dist/*.whl
+          git add .
           git commit -m 'Pushing a new wheel'
           git push
